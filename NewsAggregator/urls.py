@@ -15,8 +15,23 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+from rest_framework.schemas import get_schema_view
+from rest_framework.documentation import include_docs_urls
+from rest_framework_swagger.views import get_swagger_view
+from . import views
+
+DOCS_TITLE = "News docs"
+DOCS_DESCRIPTION = "v0"
 
 urlpatterns = [
+    path('', views.index, name='index'),
     path('admin/', admin.site.urls),
+    path('api/auth/', include('rest_framework.urls')),
+    path('api/v0/auth/', include('rest_auth.urls')),
+    path('api/v0/auth/registration/', include('rest_auth.registration.urls')),
+    path('api/v0/news/irna/', include('Fetch.urls')),
+    path('schema/', get_schema_view(title="News schema", description="v0")),
+    path('docs/', include_docs_urls(DOCS_TITLE, DOCS_DESCRIPTION)),
+    path('swagger-ui/', get_swagger_view(DOCS_TITLE)),
 ]
