@@ -28,7 +28,7 @@ class UserManager(BaseUserManager):
             raise ValueError("The first name field must be set")
 
         user = self.model(
-            username=self.normalize_username(username),
+            username=username,
             fname=fname,
             lname=lname,
             email=self.normalize_email(email) if email else None,
