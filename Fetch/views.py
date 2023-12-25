@@ -40,7 +40,7 @@ class ArchiveCreate(generics.GenericAPIView):
         if redis_instance.get("data_inserted"):
             remaining_time = int(str(redis_instance.ttl("data_inserted")))
             if remaining_time >= 0:
-                remaining_time = datetime.timedelta(seconds=remaining_time)
+                remaining_time = timedelta(seconds=remaining_time)
                 remaining_time_str = str(remaining_time)
                 message = f"Skipped insertion. Data already exists. Key will expire in {remaining_time_str}."
             else:
